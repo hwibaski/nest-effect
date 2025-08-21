@@ -1,31 +1,30 @@
 import { Effect } from 'effect';
 import { CommentContent } from 'src/comment/domain';
-import { Post } from 'src/post/domain';
+import { Post, PostId } from 'src/post/domain';
 import { UnauthorizedError } from 'src/shared/errors';
-import { 
-  InvalidContentError, 
-  DeletedCommentUpdateError 
-} from 'src/shared/errors/domain/comment/errors';
+import { DeletedCommentUpdateError } from 'src/shared/errors/domain/comment/errors';
 import { v4 as uuid } from 'uuid';
-import { AggregateRoot, AggregateRootId } from '../../shared/types';
+import { AggregateRoot, Id } from '../../shared/types';
+
+type CommentId = Id<'Comment'>;
 
 export class Comment extends AggregateRoot<'Comment'> {
   #content: CommentContent;
   #authorId: string;
-  #postId: string;
+  #postId: PostId;
 
   constructor(props: {
-    id?: AggregateRootId<'Comment'>;
+    id?: CommentId;
     content: CommentContent;
     authorId: string;
-    postId: string;
+    postId: PostId;
     isDeleted?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
   }) {
     super(
-      props.id || (uuid() as AggregateRootId<'Comment'>),
+      props.id || (uuid() as CommentId),
       props.createdAt || new Date(),
       props.updatedAt || new Date(),
       props.deletedAt || null,
@@ -36,7 +35,7 @@ export class Comment extends AggregateRoot<'Comment'> {
     this.#postId = props.postId;
   }
 
-  static create(content: string, authorId: string, postId: string, post: Post) {
+  static create(content: string, authorId: string, postId: PostId, post: Post) {
     return Effect.gen(this, function* () {
       // 게시글 발행 상태 확인
       if (!post.isPublished()) {
@@ -68,7 +67,7 @@ export class Comment extends AggregateRoot<'Comment'> {
     return this.#authorId;
   }
 
-  get postId(): string {
+  get postId(): PostId {
     return this.#postId;
   }
 

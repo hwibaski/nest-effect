@@ -46,6 +46,8 @@ import {
 } from 'src/shared/response';
 import { AuthUserRole } from 'src/shared/types';
 import { assertNever } from 'src/shared/utils/assert-never';
+import { PostId } from '../domain';
+import { MemberId } from 'src/member/domain';
 
 @Controller()
 @UseInterceptors(ResponseInterceptor)
@@ -102,7 +104,7 @@ export class PostsController {
 
   @Get('posts/:id')
   async getPost(
-    @Param('id') id: string,
+    @Param('id') id: PostId,
   ): Promise<ApiResponse<PostResponseDto>> {
     const query = new GetPostByIdQuery(id);
 
@@ -168,7 +170,7 @@ export class PostsController {
   @Put('posts/:id')
   @Roles(AuthUserRole.MEMBER)
   async updatePost(
-    @Param('id') id: string,
+    @Param('id') id: PostId,
     @AuthUser() user: AuthenticatedRequest['user'],
     @Body() dto: UpdatePostDto,
   ): Promise<ApiResponse<PostResponseDto>> {
@@ -228,7 +230,7 @@ export class PostsController {
   @Put('posts/:id/publish')
   @UseGuards(JwtAuthGuard)
   async publishPost(
-    @Param('id') id: string,
+    @Param('id') id: PostId,
     @AuthUser() user: AuthenticatedRequest['user'],
   ): Promise<ApiResponse<PostResponseDto>> {
     const authorId = user.id;
@@ -269,7 +271,7 @@ export class PostsController {
   @Delete('posts/:id')
   @UseGuards(JwtAuthGuard)
   async deletePost(
-    @Param('id') id: string,
+    @Param('id') id: PostId,
     @AuthUser() user: AuthenticatedRequest['user'],
   ): Promise<ApiResponse<null>> {
     const authorId = user.id;

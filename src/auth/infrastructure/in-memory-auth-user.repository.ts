@@ -3,7 +3,7 @@ import { Effect } from 'effect';
 import { AuthUser } from 'src/auth/domain/auth-user.entity';
 import { AuthUserRepository } from 'src/auth/domain/auth-user.repository';
 import { membersMap } from 'src/member/infrastructure/in-memory-member.repository';
-import { AggregateRootId } from 'src/shared/types';
+import { Id } from 'src/shared/types';
 
 @Injectable()
 export class InMemoryAuthUserRepository implements AuthUserRepository {
@@ -12,7 +12,7 @@ export class InMemoryAuthUserRepository implements AuthUserRepository {
       if (member.email.value === email) {
         return Effect.succeed(
           AuthUser.of({
-            id: member.id as unknown as AggregateRootId<'AuthUser'>,
+            id: member.id as unknown as Id<'AuthUser'>,
             email: member.email,
             password: member.password,
             name: member.name,

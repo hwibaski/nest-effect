@@ -15,6 +15,9 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "paths": {
+      "src/*": ["src/*"]
+    }
   }
 }

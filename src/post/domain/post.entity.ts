@@ -7,10 +7,12 @@ import { PostAlreadyPublishedError } from '../../shared/errors/domain/post/error
 import {
   Action,
   AggregateRoot,
-  AggregateRootId,
+  Id,
   PostStatus,
   ResourceType,
 } from '../../shared/types';
+
+export type PostId = Id<'Post'>;
 
 export class Post extends AggregateRoot<'Post'> {
   #title: Title;
@@ -22,7 +24,7 @@ export class Post extends AggregateRoot<'Post'> {
   #viewCount: number;
 
   constructor(props: {
-    id?: AggregateRootId<'Post'>;
+    id?: PostId;
     title: Title;
     content: PostContent;
     authorId: string;
@@ -35,7 +37,7 @@ export class Post extends AggregateRoot<'Post'> {
     deletedAt?: Date;
   }) {
     super(
-      props.id || (uuid() as AggregateRootId<'Post'>),
+      props.id || (uuid() as PostId),
       props.createdAt || new Date(),
       props.updatedAt || new Date(),
       props.deletedAt || null,

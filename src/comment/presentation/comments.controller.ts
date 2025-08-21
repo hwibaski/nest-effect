@@ -27,6 +27,7 @@ import {
   GetCommentsQueryDto,
   UpdateCommentDto,
 } from 'src/comment/presentation/dto/comments.dto';
+import { PostId } from 'src/post/domain';
 import { Roles } from 'src/shared/decorators';
 import { AuthUser } from 'src/shared/decorators/auth-user.decorator';
 import { AuthenticatedRequest } from 'src/shared/guards/jwt-auth.guard';
@@ -85,7 +86,7 @@ export class CommentsController {
   @Post('posts/:postId/comments')
   @Roles(AuthUserRole.MEMBER)
   async createComment(
-    @Param('postId') postId: string,
+    @Param('postId') postId: PostId,
     @AuthUser() user: AuthenticatedRequest['user'],
     @Body() dto: CreateCommentDto,
   ): Promise<ApiResponse<CommentResponseDto>> {

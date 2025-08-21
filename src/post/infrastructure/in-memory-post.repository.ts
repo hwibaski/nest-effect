@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Effect } from 'effect';
-import { Post } from 'src/post/domain';
+import { Post, PostId } from 'src/post/domain';
 import { PostRepository } from 'src/post/domain/post.repository';
+import { Id } from 'src/shared/types';
 
 @Injectable()
 export class InMemoryPostRepository implements PostRepository {
@@ -17,7 +18,7 @@ export class InMemoryPostRepository implements PostRepository {
     return Effect.succeed(post);
   }
 
-  findById(id: string): Effect.Effect<Post | null> {
+  findById(id: PostId): Effect.Effect<Post | null> {
     return Effect.succeed(this.posts.get(id) || null);
   }
 
@@ -26,12 +27,12 @@ export class InMemoryPostRepository implements PostRepository {
     return Effect.succeed(post);
   }
 
-  delete(id: string): Effect.Effect<void> {
+  delete(id: PostId): Effect.Effect<void> {
     this.posts.delete(id);
     return Effect.succeed(void 0);
   }
 
-  incrementViewCount(id: string): Effect.Effect<void> {
+  incrementViewCount(id: PostId): Effect.Effect<void> {
     const post = this.posts.get(id);
     if (post) {
       post.incrementViewCount();

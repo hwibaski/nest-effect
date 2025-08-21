@@ -8,13 +8,14 @@ import { Reflector } from '@nestjs/core';
 import { Effect } from 'effect';
 import { Request } from 'express';
 import { AuthJwtService } from 'src/auth/application/jwt.service';
+import { AuthUserId } from 'src/auth/domain';
 import { AuthUserRepository } from 'src/auth/domain/auth-user.repository';
 import { Roles } from 'src/shared/decorators/roles';
 import { AuthUserRole } from 'src/shared/types';
 
 export interface AuthenticatedRequest extends Request {
   user: {
-    id: string;
+    id: AuthUserId;
     email: string;
     role: AuthUserRole;
   };

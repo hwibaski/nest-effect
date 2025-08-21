@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Effect } from 'effect';
 import { Comment, CommentRepository } from 'src/comment/domain';
-import { PostRepository } from 'src/post/domain';
+import { PostId, PostRepository } from 'src/post/domain';
 import { ResourceNotFoundError } from 'src/shared/errors';
 
 export class CreateCommentCommand {
   constructor(
-    public readonly postId: string,
+    public readonly postId: PostId,
     public readonly authorId: string,
     public readonly content: string,
     public readonly parentCommentId?: string,

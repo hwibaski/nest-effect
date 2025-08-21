@@ -5,10 +5,12 @@ import { InvalidNameError } from 'src/shared/errors/domain/member/errors';
 import { v4 as uuid } from 'uuid';
 import {
   AggregateRoot,
-  AggregateRootId,
+  Id,
   AuthUserRole,
   ValidationField,
 } from '../../shared/types';
+
+export type MemberId = Id<'Member'>;
 
 export class Member extends AggregateRoot<'Member'> {
   #email: Email;
@@ -18,7 +20,7 @@ export class Member extends AggregateRoot<'Member'> {
   #isActive: boolean;
 
   constructor(props: {
-    id?: AggregateRootId<'Member'>;
+    id?: MemberId;
     email: Email;
     password: Password;
     name: string;
@@ -29,7 +31,7 @@ export class Member extends AggregateRoot<'Member'> {
     deletedAt?: Date;
   }) {
     super(
-      props.id || (uuid() as AggregateRootId<'Member'>),
+      props.id || (uuid() as MemberId),
       props.createdAt || new Date(),
       props.updatedAt || new Date(),
       props.deletedAt || null,

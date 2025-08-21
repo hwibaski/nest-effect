@@ -6,11 +6,9 @@ import {
   InvalidCredentialsError,
 } from 'src/shared/errors/domain/auth/errors';
 import { v4 as uuid } from 'uuid';
-import {
-  AggregateRoot,
-  AggregateRootId,
-  AuthUserRole,
-} from '../../shared/types';
+import { AggregateRoot, Id, AuthUserRole } from '../../shared/types';
+
+export type AuthUserId = Id<'AuthUser'>;
 
 export class AuthUser extends AggregateRoot<'AuthUser'> {
   #email: Email;
@@ -20,7 +18,7 @@ export class AuthUser extends AggregateRoot<'AuthUser'> {
   #isActive: boolean;
 
   private constructor(props: {
-    id?: AggregateRootId<'AuthUser'>;
+    id?: AuthUserId;
     email: Email;
     password: Password;
     name: string;
@@ -31,7 +29,7 @@ export class AuthUser extends AggregateRoot<'AuthUser'> {
     deletedAt?: Date;
   }) {
     super(
-      props.id || (uuid() as AggregateRootId<'AuthUser'>),
+      props.id || (uuid() as AuthUserId),
       props.createdAt || new Date(),
       props.updatedAt || new Date(),
       props.deletedAt || null,
@@ -45,7 +43,7 @@ export class AuthUser extends AggregateRoot<'AuthUser'> {
   }
 
   static of(props: {
-    id?: AggregateRootId<'AuthUser'>;
+    id?: AuthUserId;
     email: Email;
     password: Password;
     name: string;

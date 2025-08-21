@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Effect } from 'effect';
-import { PostRepository } from 'src/post/domain';
+import { PostId, PostRepository } from 'src/post/domain';
 import { ResourceNotFoundError } from 'src/shared/errors';
 
 export class GetPostByIdQuery {
-  constructor(public readonly postId: string) {}
+  constructor(public readonly postId: PostId) {}
 }
 
 export class GetPostByIdResult {

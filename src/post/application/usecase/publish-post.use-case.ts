@@ -1,22 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { Effect } from 'effect';
-import { PostRepository } from 'src/post/domain';
+import { AuthUserId } from 'src/auth/domain';
+import { PostId, PostRepository } from 'src/post/domain';
 import { ResourceNotFoundError } from 'src/shared/errors';
 
 export class PublishPostCommand {
   constructor(
-    public readonly postId: string,
-    public readonly authorId: string,
+    public readonly postId: PostId,
+    public readonly authorId: AuthUserId,
   ) {}
 }
 
 export class PublishPostResult {
   constructor(
-    public readonly id: string,
+    public readonly id: PostId,
     public readonly title: string,
     public readonly content: string,
     public readonly status: string,
-    public readonly authorId: string,
+    public readonly authorId: AuthUserId,
     public readonly publishedAt: Date | undefined,
     public readonly tags: string[],
     public readonly viewCount: number,

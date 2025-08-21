@@ -1,10 +1,10 @@
-export type AggregateRootId<B extends string> = string & {
+export type Id<B extends string> = string & {
   readonly __brand: B;
 };
 
 export class AggregateRoot<B extends string> {
   constructor(
-    public readonly id: AggregateRootId<B>,
+    public readonly id: Id<B>,
     public readonly createdAt: Date,
     public updatedAt: Date,
     public deletedAt: Date | null,

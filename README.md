@@ -103,10 +103,12 @@ abstract class PostDao {
 
 ```typescript
 // Branded Types로 ID 타입 안전성
-type AggregateRootId<T extends string> = string & { readonly __brand: T };
+type Id<T extends string> = string & { readonly __brand: T };
+
+type PostId = Id<'Post'>;
 
 class Post extends AggregateRoot<'Post'> {
-  constructor(id: AggregateRootId<'Post'>) { ... }
+  constructor(id: PostId) { ... }
 }
 
 // JavaScript Private Fields로 캡슐화

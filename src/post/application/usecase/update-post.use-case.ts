@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Effect } from 'effect';
-import { PostRepository } from 'src/post/domain';
+import { AuthUserId } from 'src/auth/domain';
+import { MemberId } from 'src/member/domain';
+import { PostId, PostRepository } from 'src/post/domain';
 import { ResourceNotFoundError } from 'src/shared/errors';
 import { ResourceType } from 'src/shared/types';
 
 export class UpdatePostCommand {
   constructor(
-    public readonly postId: string,
-    public readonly authorId: string,
+    public readonly postId: PostId,
+    public readonly authorId: AuthUserId,
     public readonly title?: string,
     public readonly content?: string,
     public readonly tags?: string[],
@@ -16,7 +18,7 @@ export class UpdatePostCommand {
 
 export class UpdatePostResult {
   constructor(
-    public readonly id: string,
+    public readonly id: PostId,
     public readonly title: string,
     public readonly content: string,
     public readonly status: string,
